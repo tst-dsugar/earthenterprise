@@ -210,6 +210,10 @@ task openGeeCommonRpm(type: Rpm, dependsOn: openGeeSharedFiles) {
     postInstall = file('opengee-common/post-install.sh')
     preUninstall = file('opengee-common/pre-uninstall.sh')
 
+    from (file('build/shared/install.kv')) {
+	into new File(packageInstallRootDir, 'var/opt/opengee/opengee-common')
+    }
+
     from (file('build/shared/gevars.sh')) {
         into new File(packageInstallRootDir, 'etc/init.d')
     }
