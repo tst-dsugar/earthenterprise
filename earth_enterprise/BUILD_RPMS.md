@@ -96,3 +96,24 @@ converting an RPM install of Open GEE back to a manual install is not safe.
 This is because the RPM packaging system may remove key directories and files
 when the associated Open GEE packages are removed.  Backups should be made
 of any critical data before attempting this.
+
+## Package Linting
+
+RPM linting was added to help our community establish and reliably maintain a
+consistent and higher quality of RPM packaging for opengee.  The rpm lint
+process also helps us to identify and document existing packaging issues that
+may require future mediation. 
+
+Package linting is done using the ```rpmlint``` tool which must be installed
+with yum.  This can be done with either rhel6 or 7.  A special target,
+```package_lint```, was added to scons.  A typical invocation to lint potential
+release RPMs might be ```scons -j8 release=1 package_lint```.
+
+The ```package_lint``` target will both build a set of rpms in
+rpms/build/distributions, and then run the rpmlint command against them using
+the ```rpmlintrc``` file.  Any rpmlint errors are considered fatal for the
+target.  This allows us to use ```package_lint``` as a new rpm build target
+that also validates packages, but without disrupting any existing workflows or
+scripts.  Any new issues that are found with rpmlint can be added and
+documented in the rpmlintrc file, if they can be safely ignored for now and
+addressed later.
