@@ -178,7 +178,7 @@ try:
 except:
     print "OS is not Ubuntu"
 
-extragccflags = []
+extragccflags = ['-DQT3_SUPPORT']
 if sys.platform[0:5] == 'linux':
   if release:
     # -s tells the linker to strip all symbols
