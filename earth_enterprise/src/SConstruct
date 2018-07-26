@@ -460,6 +460,7 @@ env = khEnvironment(
              # generated 3rd party headers
              Dir('/usr/include/qt4'),
              Dir('/usr/include/qt4/QtCore'),
+             Dir('/usr/include/qt4/QtGui'),
              Dir(builddir + '/include'),
              Dir(builddir),  # generated headers
              Dir('.'),

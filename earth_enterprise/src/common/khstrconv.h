@@ -28,7 +28,7 @@ inline
 void
 FromString(const std::string &str, QString &val)
 {
-  val = str;
+  val = QString::fromUtf8(str.c_str());
 }
 
 template <class T>
