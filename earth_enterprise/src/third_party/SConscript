@@ -40,7 +40,6 @@ if third_party_env['bundle_3rd_libs']:
       'cython',
       'numpy',
       'libxml2', # requires python to build and install a Python library module, uses libz.
-      'qt',
       'xerces-c',
       'libcurl',
       'glu',
@@ -65,7 +64,6 @@ else:
       'openssl',
       'openldap',
       'libcurl',
-      'qt',
       'glu',
       'openjpeg',
       'gdal',
