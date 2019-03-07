@@ -328,8 +328,6 @@ main(int argc, char *argv[]) {
         // insert meta to be passed down into an imagry project...
         if (ParseUTCTime(sourcedate, &ts))
           req.meta.SetValue("projectdate", GetUTCTimeString(ts));
-        else
-          req.meta.SetValue("projectdate", kUnknownDateTimeUTC);
       }
     }
 

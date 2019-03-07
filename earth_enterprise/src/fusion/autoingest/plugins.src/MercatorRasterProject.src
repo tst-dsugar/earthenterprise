@@ -78,7 +78,11 @@ class MercatorRasterProjectAssetVersionImpl {
   // If no image resources or dates are available returns "0000-00-00" for
   // "unknown date".
   std::string GetAcquisitionDate(void) const {
-    std::string result(kUnknownDate);  // init to unknown
+    std::string result = meta.GetValue("projectdate", kUnknownDate);
+    // if meta passes projectdate, lets return it
+    if (result != kUnknownDate)
+      return result;
+
     const std::vector<InsetStackItem>& insets = config.insets;
     for(uint i = 0; i < insets.size(); ++i) {
       // NOTE: the date is stored in the asset, not the version!!!
