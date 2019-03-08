@@ -235,6 +235,7 @@ main(int argc, char *argv[]) {
       } else if (ParseUTCTime(sourcedate, &ts)) {
         // Reformat into standard UTC ISO 8601 time string.
         req.meta.SetValue("sourcedate", GetUTCTimeString(ts));
+        req.meta.SetValue("projectdate", GetUTCTimeString(ts));
       } else {
         notify(NFY_FATAL, "Sourcedate '%s' is not a valid UTC ISO 8601 time"
             " string.", sourcedate.c_str());
@@ -323,11 +324,7 @@ main(int argc, char *argv[]) {
       if (!khIsURI(filelist[0]) &&
           khHasExtension(filelist[0], (AssetType == AssetDefs::Imagery) ?
                          ".kip" : ".ktp")) {
-        struct tm ts;
         req.config.sourceIsProduct = true;
-        // insert meta to be passed down into an imagry project...
-        if (ParseUTCTime(sourcedate, &ts))
-          req.meta.SetValue("projectdate", GetUTCTimeString(ts));
       }
     }
 
