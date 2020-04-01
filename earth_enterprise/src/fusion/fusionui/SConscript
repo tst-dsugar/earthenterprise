@@ -29,6 +29,9 @@ env = env.Clone()
 env.Append( CXXFLAGS = ['-Wno-unused-function', '-Wno-unused-value',
                         '-DQT3_SUPPORT',
                         '-DQDOC','-DQ_DECLARE_TR_FUNCTIONS'],
+                        # used for qt_wait_for_window_manager in
+                        # main.cpp, no longer needed???
+                        #, '-DQ_WS_X11'],
             CPPPATH = ['#fusion/fusionui',
                        Dir('.ui')],              # for generated files
             LINKFLAGS=['-L/usr/lib/x86_64-linux-gnu'],
@@ -46,10 +49,10 @@ env.Append( CXXFLAGS = ['-Wno-unused-function', '-Wno-unused-value',
                   'gif',
                   'jpeg',
                   'freetype',
-                  'QtCore', 'QtGui', 'Qt3Support',
-                  'QtOpenGL', 'QtDesigner', 'QtMultimedia',
-                  'QtNetwork', 'QtScript', 'QtScriptTools',
-                  'QtSql', 'QtSvg', 'QtTest', 'QtUiTools', 'QtXml', 'QtXmlPatterns',
+                  'QtCore', 'QtGui', 'Qt3Support', 'QtOpenGL',
+                  #'QtDesigner', 'QtMultimedia',
+                  #'QtNetwork', 'QtScript', 'QtScriptTools',
+                  #'QtSql', 'QtSvg', 'QtTest', 'QtUiTools', 'QtXml', 'QtXmlPatterns',
                   'xerces-c',
                   'GL'])
 

@@ -14,8 +14,8 @@
 
 //
 #include <Qt/qobjectdefs.h>
-#include "TextStyle.h"
 #include "StyleSave.h"
+#include "TextStyle.h"
 #include "TextPreviewLabel.h"
 #include <Qt/q3combobox.h>
 #include <Qt/qspinbox.h>
@@ -71,7 +71,7 @@ TextStyle::TextStyle(QWidget *parent,
     config(config_),
     haveSave(kMaxSavedStyles, false),
     savedConfigs(kMaxSavedStyles),
-    manager(this)
+    manager(dynamic_cast<QWidget*>(this))
 {
   // Populate list with avilable fonts
   const std::map<maprender::FontInfo, SkTypeface*>& font_map = maprender::FontInfo::GetFontMap();
@@ -173,7 +173,7 @@ void TextStyle::accept() {
   if (new_text_styles != orig_text_styles) {
     if (!new_text_styles.Save()) {
       QMessageBox::warning(
-          this, kh::tr("Error"),
+          dynamic_cast<QWidget*>(this), kh::tr("Error"),
           kh::tr("Unable to save text styles.\n") +
           kh::tr("Check console for more details."),
           kh::tr("OK"), QString::null, QString::null);
@@ -365,7 +365,7 @@ TextPreviewLabel::TextPreviewLabel(QWidget* parent, const char* name)
   setAlignment(Qt::AlignCenter);
 }
 
-TextPreviewLabel::TextPreviewLabel(QDialog* parent)
+TextPreviewLabel::TextPreviewLabel(QWidget* parent)
   : QLabel(parent), dragging_(false)
 {
     setFrameShape(QFrame::StyledPanel);
@@ -373,6 +373,8 @@ TextPreviewLabel::TextPreviewLabel(QDialog* parent)
     setScaledContents(false);
     setAlignment(Qt::AlignCenter);
 }
+
+TextPreviewLabel::~TextPreviewLabel() {}
 
 void TextPreviewLabel::mousePressEvent(QMouseEvent* event) {
   QLabel::mousePressEvent(event);
@@ -384,7 +386,7 @@ void TextPreviewLabel::mouseMoveEvent(QMouseEvent* event) {
     QPixmap preview_pix = maprender::TextStyleToPixmap(
         config_, paletteBackgroundColor(),
         12 /* fixedSize */);
-    QImageDrag* drag = new QImageDrag(preview_pix.convertToImage(), this);
+    QImageDrag* drag = new QImageDrag(preview_pix.toImage(), this);
     drag->setPixmap(preview_pix);
     drag->dragCopy();
     dragging_ = false;
@@ -402,13 +404,13 @@ void TextPreviewLabel::UpdateConfig(const MapTextStyleConfig& config) {
 // ***  Style Save Button
 // ****************************************************************************
 
-StyleSaveButton::StyleSaveButton(QWidget* parent, const char* name)
+/*StyleSaveButton::StyleSaveButton(QWidget* parent, const char* name)
   : QPushButton(name, parent) {
 }
 
 StyleSaveButton::StyleSaveButton(Q3ButtonGroup* parent)
   : QPushButton(parent)
-{}
+{}*/
 
 void StyleSaveButton::dragEnterEvent(QDragEnterEvent* event) {
   if (QImageDrag::canDecode(dynamic_cast<const QMimeSource*>(event))) {
@@ -425,5 +427,5 @@ void StyleSaveButton::dropEvent(QDropEvent* event) {
   QPixmap pixmap;
   if (QImageDrag::decode(dynamic_cast<const QMimeSource*>(event), pixmap))
     setPixmap(pixmap);
-  emit StyleChanged(this);
+  //emit StyleChanged(dynamic_cast<QWidget*>(this));
 }

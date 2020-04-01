@@ -45,8 +45,8 @@ class StyleSaveButton : public QPushButton {
   Q_OBJECT
 
  public:
-  StyleSaveButton(QWidget* parent, const char* name);
-  StyleSaveButton(Q3ButtonGroup*);
+  StyleSaveButton(QWidget* parent, const char* name) :
+      QPushButton(name, parent) {}
 
   // inherited from QWidget
   // support drop

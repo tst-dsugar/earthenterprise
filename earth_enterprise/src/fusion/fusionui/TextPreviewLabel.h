@@ -41,7 +41,8 @@ class TextPreviewLabel : public QLabel {
 
  public:
   TextPreviewLabel(QWidget* parent, const char* name);
-  TextPreviewLabel(QDialog*);
+  virtual ~TextPreviewLabel();
+  TextPreviewLabel(QWidget*);
 
   // inherited from QWidget
   // support drag

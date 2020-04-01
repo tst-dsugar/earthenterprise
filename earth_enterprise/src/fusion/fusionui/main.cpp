@@ -29,7 +29,7 @@
 #include <Qt/qfile.h>
 #include <Qt/qeventloop.h>
 #include <Qt/qdesktopwidget.h>
-
+#include <Qt/qsplashscreen.h>
 #include <builddate.h>
 #include "fusion/fusionversion.h"
 #include "fusion/fusionui/MainWindow.h"
@@ -53,9 +53,9 @@
 void qt_wait_for_window_manager(QWidget* widget);
 #endif
 
-class SplashScreen : public QWidget {
+class SplashScreen : public QSplashScreen {
  public:
-  explicit SplashScreen(const QPixmap& pix);
+  explicit SplashScreen(const QPixmap& pix = QPixmap(), Qt::WindowFlags f = 0);
   void setStatus(const QString &message, int alignment = Qt::AlignLeft,
                  const QColor &color = Qt::white);
   void finish(QWidget* main_win);
@@ -66,8 +66,8 @@ class SplashScreen : public QWidget {
 };
 
 // WStyle_Customize no longer needed: https://doc.qt.io/archives/qt-4.8/qt.html
-SplashScreen::SplashScreen(const QPixmap& pix)
-    : QWidget(0, Qt::SplashScreen),
+SplashScreen::SplashScreen(const QPixmap& pix, Qt::WindowFlags f)
+    : QSplashScreen(pix, f),
       pix_(pix) {
   resize(pix_.size());
   QRect scr = QApplication::desktop()->screenGeometry();
@@ -97,10 +97,9 @@ void SplashScreen::repaint() {
 }
 
 void SplashScreen::finish(QWidget* main_win) {
-#if defined(Q_WS_X11)
+/*#if defined(Q_WS_X11)
   qt_wait_for_window_manager(main_win);
-#endif
-
+#endif*/
   close();
 }
 
