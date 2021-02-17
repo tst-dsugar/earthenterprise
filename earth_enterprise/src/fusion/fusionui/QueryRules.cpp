@@ -40,17 +40,10 @@ QueryRules::QueryRules(QWidget* parent, const char* name, Qt::WFlags f)
 
 void QueryRules::init(const FilterConfig& config) {
   // clear out any previous children
-  const QObjectList c = viewport()->children();
-  if (c.size()) {
-    auto it = c.begin();
-    QObject* obj;
-    while ((obj = *it) != 0) {
-      ++it;
-      Q3GroupBox* box = reinterpret_cast<Q3GroupBox*>(obj);
-      delete box;
-    }
+  const auto list = viewport()->findChildren<Q3GroupBox *>();
+  foreach(QGroupBox *box, list) {
+    delete box;
   }
-
   rule_count_ = 0;
 
   // now add the new ones back in
